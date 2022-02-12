@@ -1,6 +1,7 @@
 # Create IAM Role for proper policy to manage EKS
-resource "aws_iam_role" "demo" {
-  name = "eks-cluster-demo"
+resource "aws_iam_role" "eks-role" {
+
+  name = "eks-cluster-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -14,16 +15,16 @@ resource "aws_iam_role" "demo" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "eks-role-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.demo.name
+  role       = aws_iam_role.eks-role.name
 }
 
 
 # Creating EKS Cluster
-resource "aws_eks_cluster" "demo" {
-  name     = "demo"
-  role_arn = aws_iam_role.demo.arn
+resource "aws_eks_cluster" "eks-cluster" {
+  name     = "main-cluster"
+  role_arn = aws_iam_role.eks-role.arn
 
   vpc_config {
     subnet_ids = [
@@ -34,5 +35,5 @@ resource "aws_eks_cluster" "demo" {
     ]
   }
 
-  depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
+  depends_on = [aws_iam_role_policy_attachment.eks-role-AmazonEKSClusterPolicy]
 }
