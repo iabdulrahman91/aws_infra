@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   name: app-config
+   namespace: django
+data:
+   DB_NAME: stackoverflow
+   DB_HOST: database-service
+   DB_PORT: database-port

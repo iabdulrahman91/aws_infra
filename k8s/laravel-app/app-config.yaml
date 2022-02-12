@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   name: app-config
+   namespace: laravel
+data:
+   APP_KEY: base64:wGaizyMTo0LX5mZ8mNF6eEdXmFXt2rbSZp4tf0GT1Jk=
+   APP_NAME: stackoverflow
+   APP_ENV: production
+   APP_DEBUG: "false"
+   DB_CONNECTION: pgsql
+   DB_HOST: database-service
+   DB_PORT: database-port
+   DB_DATABASE: stackoverflow

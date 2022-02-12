@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+  namespace: laravel
+spec:
+  selector:
+    matchLabels:
+      app: stackoverflow
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: stackoverflow
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.2
+          imagePullPolicy: Always
+
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-conf
+                  key: DB_DATABASE
+
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 250m
+            limits:
+              memory: 256Mi
+              cpu: 250m
+
+          ports:
+            - containerPort: 5432
+              name: database
+
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: database-persistent-storage
+      volumes:
+        - name: database-persistent-storage
+          persistentVolumeClaim:
+            claimName: database-pv-claim

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: django
+  labels:
+    app: stackoverflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stackoverflow
+  template:
+    metadata:
+      labels:
+        app: stackoverflow
+    spec:
+      containers:
+        - name: stackoverflow
+          image: iabdulrahman91/sary-app-django:latest
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: app-config
+
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 250m
+            limits:
+              memory: 256Mi
+              cpu: 250m
+
+          ports:
+            - name: app
+              containerPort: 8000

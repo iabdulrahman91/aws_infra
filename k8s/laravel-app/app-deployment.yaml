@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: laravel
+  labels:
+    app: stackoverflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stackoverflow
+  template:
+    metadata:
+      labels:
+        app: stackoverflow
+    spec:
+      containers:
+        - name: stackoverflow
+          image: iabdulrahman91/sary-app-laravel:latest
+          imagePullPolicy: Always
+
+          args:
+            - php artisan migrate --force && php artisan config:cache
+
+          envFrom:
+            - configMapRef:
+                name: app-config
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: APP_KEY
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 250m
+            limits:
+              memory: 256Mi
+              cpu: 250m
+
+          ports:
+            - name: app
+              containerPort: 80
