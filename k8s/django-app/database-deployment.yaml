@@ -23,19 +23,19 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secrets
+                  name: database-secrets
                   key: password
 
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secrets
+                  name: database-secrets
                   key: username
 
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: app-conf
+                  name: app-config
                   key: DB_DATABASE
 
           resources:
@@ -56,4 +56,4 @@ spec:
       volumes:
         - name: database-persistent-storage
           persistentVolumeClaim:
-            claimName: database-pv-claim
+            claimName: database-pvc-1
