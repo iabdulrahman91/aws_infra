@@ -10,5 +10,5 @@ data:
    APP_DEBUG: "false"
    DB_CONNECTION: pgsql
    DB_HOST: database-service
-   DB_PORT: database-port
+   DB_PORT: '5432'
    DB_DATABASE: stackoverflow

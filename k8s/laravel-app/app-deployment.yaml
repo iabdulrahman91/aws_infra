@@ -27,12 +27,6 @@ spec:
             - configMapRef:
                 name: app-config
           env:
-            - name: APP_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: APP_KEY
-
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
