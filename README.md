@@ -46,12 +46,17 @@ The First deployment is to demonstrate deplying:
 
 [https://github.com/iabdulrahman91/sary_app_django]
 
+[API URL](http://a173b9962a8184534a44a4226ef0c9cd-a797f83e3788bf39.elb.us-east-2.amazonaws.com)
+
 - **Django app (Python)**
 - **PostgreSQL using StatefulSet**
 
 The Second deployment is to demonstrate deplying:
 
 [https://github.com/iabdulrahman91/sary-app-laravel]
+
+[API URL](http://a2eb4a6cf886243ba8f6bda8e9d0d7df-b4a37456e225c801.elb.us-east-2.amazonaws.com/api/questions)
+
 
 - **Laravel app (PHP)**
 - **PostgreSQL using Deployment**
