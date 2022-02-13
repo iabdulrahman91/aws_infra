@@ -1,13 +1,14 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: database-deployment
+  name: database-statefulset
   namespace: django
 spec:
   selector:
     matchLabels:
       app: stackoverflow
-  replicas: 1
+  serviceName: database-service
+  replicas: 2
   template:
     metadata:
       labels:
@@ -18,7 +19,6 @@ spec:
           image: postgres:14.2
           imagePullPolicy: Always
 
-          
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
