@@ -4,6 +4,10 @@ metadata:
    name: app-config
    namespace: django
 data:
+   DEBUG: "False"
    DB_NAME: stackoverflow
+   DB_DATABASE: stackoverflow
    DB_HOST: database-service
-   DB_PORT: database-port
+   DB_PORT: '5432'
+   SETTING_FILE: sary_app_django.settings_prod
+
