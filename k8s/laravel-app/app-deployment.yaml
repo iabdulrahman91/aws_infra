@@ -20,9 +20,6 @@ spec:
           image: iabdulrahman91/sary-app-laravel:latest
           imagePullPolicy: Always
 
-          args:
-            - php artisan migrate --force && php artisan config:cache
-
           envFrom:
             - configMapRef:
                 name: app-config
